@@ -1,6 +1,6 @@
 
 #include "doctest.h"
-#include "FamilyTree.hpp"
+#include "AncestorTree.hpp"
 
 #include <string>
 using namespace std;
