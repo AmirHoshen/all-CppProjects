@@ -10,11 +10,4 @@
 
 class SniperCommander : public Sniper
 {
-public:
-    SniperCommander(int team) : Sniper(SC_HP, SC_DPA, team, true, Soldier::Sniper){};
-    ~SniperCommander(){};
-    void heal() override
-    {
-        _hp = SC_HP;
-    }
 };

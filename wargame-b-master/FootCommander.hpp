@@ -10,12 +10,5 @@
 
 class FootCommander : public FootSoldier
 {
-public:
-    FootCommander(int team) : FootSoldier(FC_HP, FC_DPA, team, true, Soldier::FootSoldier){};
-    ~FootCommander(){};
 
-    void heal() override
-    {
-        _hp = FC_HP;
-    }
 };
