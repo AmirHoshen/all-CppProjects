@@ -10,7 +10,7 @@ using namespace solver;
 
 
 TEST_CASE("simple equation") {
-     RealVariable x;
+     realVariable x;
      CHECK(solve(2*x==10)==5);
      CHECK(solve(-2*x==-10)==5);
      CHECK(solve(2*x==0)==0);
@@ -46,7 +46,7 @@ TEST_CASE("simple equation") {
 
 }
 TEST_CASE("test 2"){
-    RealVariable x;
+    realVariable x;
             CHECK(solve((x^2)==9)==3);
             CHECK(solve(2*(x^2)==18)==3);
             CHECK(solve((x^2)+5==30)==5);
@@ -67,7 +67,7 @@ TEST_CASE("test 2"){
 }
 
 TEST_CASE("CHECK_THROWS"){
-    RealVariable x;
+    realVariable x;
     CHECK_THROWS(solve((x^2)==-100));
     CHECK_THROWS( solve((x^2)==-16));
     CHECK_THROWS( solve((x^2)==-1));
@@ -80,9 +80,9 @@ TEST_CASE("CHECK_THROWS"){
     CHECK_THROWS(solve((x^2)==-12));
 
 }
-TEST_CASE("test ComplexVariable"){
+TEST_CASE("test complexVariable"){
 
-    ComplexVariable y;
+    complexVariable y;
     CHECK(solve(2*y-4 == 10)==std::complex<double>(7,0));
     CHECK(solve(y-4 == 10)==std::complex<double>(14,0));
     CHECK((solve((y^2) == 16)==std::complex<double>(4,0)||solve((y^2) == 16)==std::complex<double>(-4,0)));
@@ -109,7 +109,7 @@ TEST_CASE("test ComplexVariable"){
 
 
 }
-TEST_CASE("CHECK_THROWS ComplexVariable ") {
-    ComplexVariable y;
+TEST_CASE("CHECK_THROWS complexVariable ") {
+    complexVariable y;
     CHECK_THROWS(solve((y ^ 0)==-16));
 }

@@ -11,5 +11,67 @@
 
 class Sniper : public FootSoldier
 {
+    public:
+    Sniper(int team): FootSoldier(S_HP, S_DPA, team, false, Soldier::Sniper){};
+    Sniper(int hp, int dpa, int team, bool isCommander, Type type) : FootSoldier(hp, dpa, team, isCommander,type){}
+    ~Sniper(){};
 
+    void attack(std::vector<std::vector<Soldier *>> &board, std::pair<int,int> source)override{
+        std::cout << "-->Sniper Attack<--"<< std::endl;
+        std::pair<int,int> enemyPosition = strongestEnemyPosition(board);
+        if(enemyPosition.first < 0 || enemyPosition.second < 0){
+            std::cout<< "Didnt found strongest enemy, Sniper::attack\n";
+            return;
+        }
+        Soldier* enemy = board[enemyPosition.first][enemyPosition.second];
+        if(enemy != nullptr){
+            enemy->_hp -= this->_dpa;
+            if(enemy->_hp <= 0){
+                delete enemy;
+                board[enemyPosition.first][enemyPosition.second] = nullptr;
+                std::cout<< "--Enemy spotted and terminated--"<<std::endl;
+            }
+        }
+    }
+
+    void specialAttack(std::vector<std::vector<Soldier *>> &board, std::pair<int,int> source)override{
+        attack(board, source);
+        if(_isCommander){
+            std::cout<<"-->SniperCommander Attack<--"<<std::endl;
+            for(int i=0; i<board.size(); ++i){
+                std::vector<Soldier *> a = board[i];
+                for(int j=0; j<a.size(); ++j){
+                    Soldier *s = a[j];
+                    if(s != NULL && s->_team == _team && !s->_isCommander && s->_type == _type){
+                        s->specialAttack(board, {i,j});
+                    }
+                }
+            }
+        }
+    }
+
+    void heal() override{
+        _hp = S_HP;
+    }
+
+    std::pair<int,int> strongestEnemyPosition(std::vector<std::vector<Soldier *>> &board){
+        Soldier *tmp = nullptr;
+        std::pair<int,int> ans = {-1,-1};
+
+        for (int i = 0; i < board.size(); ++i)
+        {
+            std::vector<Soldier *> a = board[i];
+            for(int j=0 ; j<a.size(); ++j){
+                Soldier *s = a[j];
+                if(s != nullptr && s->_team != _team){
+                    if(tmp == nullptr){tmp = s;}
+                    else if(s->_hp > tmp->_hp){
+                        tmp = s;
+                        ans = {i,j};
+                    }
+                }
+            }
+        }
+        return ans;
+    }
 };

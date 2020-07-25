@@ -2,10 +2,10 @@
 #include "solver.hpp"
 
 using namespace std;
-using solver::solve, solver::RealVariable, solver::ComplexVariable;
+using namespace solver;
 TEST_CASE("Test") 
 {
- RealVariable x;
+realVariable x;
 
 
      CHECK(solve(2*x-4 == 10) ==7);
